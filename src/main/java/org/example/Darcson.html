@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Darcson</title>
+    <meta name="description" content="Modelo de página HTML responsiva, moderna e acessível em um único arquivo." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+          --bg: #0b1220;         /* fundo (dark) */
+          --surface: #121a2b;    /* cartões/menu */
+          --text: #e6edf7;       /* texto base */
+          --muted: #a5b4c3;      /* texto secundário */
+          --brand: #3E92CC;      /* primária */
+          --brand-600:#2f77a8;   /* hover */
+          --accent:#FFC107;      /* destaque */
+          --ok:#22c55e; --warn:#f59e0b; --err:#ef4444;
+          --ring: 0 0 0 3px rgb(62 146 204 / .35);
+        }
+        @media (prefers-color-scheme: light){
+          :root{ --bg:#f7f7f9; --surface:#ffffff; --text:#0a0a0a; --muted:#4b5563; }
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+          background:var(--bg); color:var(--text); line-height:1.6;
+        }
+        a{color:var(--brand); text-decoration:none}
+        a:hover{color:var(--brand-600)}
+        .container{width:min(1100px, 92%); margin-inline:auto}
+        .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.8rem 1.1rem; border-radius:12px; font-weight:600; border:1px solid transparent; cursor:pointer;}
+        .btn-primary{background:var(--brand); color:#fff}
+        .btn-primary:hover{background:var(--brand-600)}
+        .btn-outline{border-color:#3a4560; color:var(--text); background:transparent}
+        .btn-outline:hover{border-color:var(--brand); color:var(--brand)}
+        .ring:focus-visible{outline:none; box-shadow:var(--ring)}
+
+        /* NAV */
+        nav{position:sticky; top:0; z-index:50; backdrop-filter:saturate(120%) blur(6px); background:color-mix(in hsl, var(--bg) 82%, transparent); border-bottom:1px solid #1f2a44}
+        .nav-wrap{display:flex; align-items:center; justify-content:space-between; padding:.8rem 0}
+        .brand{display:flex; align-items:center; gap:.7rem; font-weight:800; letter-spacing:.3px}
+        .brand .logo{width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--brand), var(--accent)); display:grid; place-items:center; font-weight:900; color:#0b1220}
+        .menu{display:flex; gap:1rem}
+        .menu a{padding:.5rem .7rem; border-radius:8px}
+        .menu a:hover{background:#1a2440}
+        .nav-actions{display:flex; align-items:center; gap:.6rem}
+        .hamb{display:none}
+
+        /* HERO */
+        .hero{padding:clamp(2.5rem, 4vw, 5rem) 0 3rem;}
+        .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center}
+        .kicker{color:var(--accent); font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.85rem}
+        h1{font-size:clamp(2rem, 4vw, 3.2rem); line-height:1.1; margin:.6rem 0 1rem}
+        .lead{font-size:1.05rem; color:var(--muted)}
+        .hero-card{background:var(--surface); border:1px solid #223155; border-radius:16px; padding:1rem}
+        .mock{aspect-ratio:16/10; border-radius:12px; background:linear-gradient(135deg,#1a2440,#0f172a); border:1px dashed #2b3b66; display:grid; place-items:center; font-weight:700; color:#7aa8d8}
+
+        /* FEATURES */
+        .section{padding:3rem 0}
+        .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem}
+        .card{background:var(--surface); border:1px solid #223155; border-radius:16px; padding:1.1rem}
+        .card h3{margin:.2rem 0 .3rem}
+        .chip{font-size:.75rem; padding:.15rem .5rem; border:1px solid #2a3a63; border-radius:999px; color:#9db3cf}
+
+        /* PRICING */
+        .pricing{display:grid; grid-template-columns:repeat(3, 1fr); gap:1.2rem}
+        .price{font-size:2rem; font-weight:800}
+        .muted{color:var(--muted)}
+
+        /* CTA */
+        .cta{background:linear-gradient(180deg, rgba(62,146,204,.07), transparent 70%); border-top:1px solid #223155; border-bottom:1px solid #223155; padding:2.2rem 0; text-align:center}
+
+        /* FOOTER */
+        footer{padding:2rem 0; color:var(--muted); font-size:.95rem}
+        footer .row{display:flex; align-items:center; justify-content:space-between}
+
+        /* RESPONSIVE */
+        @media (max-width: 880px){
+          .hero-grid{grid-template-columns:1fr}
+          .pricing{grid-template-columns:1fr}
+          .grid-3{grid-template-columns:1fr}
+          .menu{display:none}
+          .hamb{display:inline-flex}
+        }
+    </style>
+</head>
+<body>
+<!-- NAVBAR -->
+<nav aria-label="Barra de navegação">
+    <div class="container nav-wrap">
+        <a class="brand" href="#" aria-label="Página inicial">
+            <span class="logo" aria-hidden>Σ</span>
+            <span>Seu Projeto</span>
+        </a>
+        <div class="menu" role="menubar">
+            <a href="#recursos" role="menuitem">Recursos</a>
+            <a href="#planos" role="menuitem">Planos</a>
+            <a href="#contato" role="menuitem">Contato</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn btn-outline ring" id="themeToggle" aria-label="Alternar tema">Tema</button>
+            <button class="btn btn-primary ring">Começar</button>
+            <button class="btn btn-outline hamb ring" id="openMenu" aria-label="Abrir menu">☰</button>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="container hero-grid">
+        <div>
+            <p class="kicker">Modelo pronto para editar</p>
+            <h1>Construa rápido. Publique bonito. Escale com confiança.</h1>
+            <p class="lead">Um template acessível, leve e responsivo em um único arquivo HTML. Sem dependências externas (exceto fonte), pronto para você personalizar.
+            </p>
+            <div style="margin-top:1.2rem; display:flex; gap:.6rem; flex-wrap:wrap">
+                <a class="btn btn-primary ring" href="#planos">Ver Planos</a>
+                <a class="btn btn-outline ring" href="#recursos">Explorar Recursos</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div class="mock">Coloque aqui um print, ilustração ou gráfico</div>
+            <ul class="muted" style="margin:.9rem 0 0; padding-left:1rem">
+                <li>HTML + CSS + JS apenas</li>
+                <li>Dark/Light com um clique</li>
+                <li>Componentes reutilizáveis (cards, chips, botões)</li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<!-- FEATURES -->
+<section id="recursos" class="section">
+    <div class="container">
+        <h2 style="margin:0 0 .6rem">Recursos principais</h2>
+        <p class="muted" style="margin:0 0 1.2rem">Comece com o básico e evolua conforme precisar. Sem complicações.</p>
+        <div class="grid-3">
+            <article class="card">
+                <span class="chip">Acessível</span>
+                <h3>Semântica & ARIA</h3>
+                <p>Estrutura com landmarks, contraste adequado e foco visível para uma experiência inclusiva.</p>
+            </article>
+            <article class="card">
+                <span class="chip">Performático</span>
+                <h3>Leve & Rápido</h3>
+                <p>CSS minimalista e sem frameworks pesados. Carrega rápido até em conexões instáveis.</p>
+            </article>
+            <article class="card">
+                <span class="chip">Escalável</span>
+                <h3>Design por tokens</h3>
+                <p>Troque cores e estilo alterando variáveis <code>:root</code>. Adapte ao seu branding em minutos.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="planos" class="section">
+    <div class="container">
+        <h2 style="margin:0 0 .6rem">Planos</h2>
+        <p class="muted" style="margin:0 0 1.2rem">Escolha o formato que melhor encaixa no seu projeto.</p>
+        <div class="pricing">
+            <article class="card" aria-label="Plano Starter">
+                <h3>Starter</h3>
+                <p class="muted">Para projetos pequenos</p>
+                <p class="price">R$ 0</p>
+                <ul class="muted" style="padding-left:1rem">
+                    <li>Template base</li>
+                    <li>Dark/Light</li>
+                    <li>Suporte da comunidade</li>
+                </ul>
+                <button class="btn btn-outline ring" style="margin-top:.8rem">Começar</button>
+            </article>
+            <article class="card" aria-label="Plano Pro">
+                <h3>Pro</h3>
+                <p class="muted">Para quem quer ir além</p>
+                <p class="price">R$ 49</p>
+                <ul class="muted" style="padding-left:1rem">
+                    <li>Componentes extras</li>
+                    <li>Exemplos de seções</li>
+                    <li>Documentação completa</li>
+                </ul>
+                <button class="btn btn-primary ring" style="margin-top:.8rem">Assinar</button>
+            </article>
+            <article class="card" aria-label="Plano Team">
+                <h3>Team</h3>
+                <p class="muted">Times & produtos</p>
+                <p class="price">R$ 99</p>
+                <ul class="muted" style="padding-left:1rem">
+                    <li>Licença para equipe</li>
+                    <li>Exemplos de fluxo</li>
+                    <li>Onboarding guiado</li>
+                </ul>
+                <button class="btn btn-outline ring" style="margin-top:.8rem">Falar com vendas</button>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" aria-label="Chamada para ação">
+    <div class="container">
+        <h2 style="margin:0 0 .4rem">Pronto para usar este template?</h2>
+        <p class="muted" style="margin:0 0 1rem">Clone, personalize e publique. Sem fricção.</p>
+        <a class="btn btn-primary ring" href="#contato">Quero conversar</a>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contato" class="section">
+    <div class="container">
+        <h2 style="margin:0 0 .6rem">Contato</h2>
+        <p class="muted" style="margin:0 0 1rem">Diga um oi 👋 — respondemos em até 1 dia útil.</p>
+        <form class="card" onsubmit="event.preventDefault(); alert('Mensagem enviada!');" aria-label="Formulário de contato">
+            <div style="display:grid; gap:.8rem; grid-template-columns:repeat(2,1fr)">
+                <label>Nome<br><input class="ring" required placeholder="Seu nome" style="width:100%; padding:.7rem .9rem; border-radius:10px; border:1px solid #2a3a63; background:transparent; color:var(--text)"></label>
+                <label>Email<br><input class="ring" type="email" required placeholder="voce@email.com" style="width:100%; padding:.7rem .9rem; border-radius:10px; border:1px solid #2a3a63; background:transparent; color:var(--text)"></label>
+            </div>
+            <label style="display:block; margin-top:.8rem">Mensagem<br>
+                <textarea class="ring" required rows="4" placeholder="Como podemos ajudar?" style="width:100%; padding:.7rem .9rem; border-radius:10px; border:1px solid #2a3a63; background:transparent; color:var(--text)"></textarea>
+            </label>
+            <div style="margin-top:1rem; display:flex; gap:.6rem; justify-content:flex-end">
+                <button class="btn btn-outline ring" type="reset">Limpar</button>
+                <button class="btn btn-primary ring" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container row">
+        <p>© <span id="year"></span> Seu Projeto. Feito com HTML + CSS + JS.</p>
+        <p><a href="#">Privacidade</a> · <a href="#">Termos</a></p>
+    </div>
+</footer>
+
+<script>
+    // Ano dinâmico
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tema (light/dark) manual + persistência
+    const root = document.documentElement;
+    const key = 'pref-theme';
+    const saved = localStorage.getItem(key);
+    if(saved === 'light') root.style.colorScheme = 'light';
+    if(saved === 'dark') root.style.colorScheme = 'dark';
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const current = getComputedStyle(root).colorScheme;
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.style.colorScheme = next;
+      localStorage.setItem(key, next);
+    });
+
+    // Menu mobile simples (demo)
+    const openBtn = document.getElementById('openMenu');
+    openBtn?.addEventListener('click', () => {
+      const menu = document.querySelector('.menu');
+      const visible = getComputedStyle(menu).display !== 'none';
+      menu.style.display = visible ? 'none' : 'flex';
+    });
+</script>
+</body>
+</html>
